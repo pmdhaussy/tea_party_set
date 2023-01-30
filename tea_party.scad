@@ -1,12 +1,14 @@
 /**
  * Tea party elements
  */
-use <../Librairies/dotSCAD-3.2.2/src/rounded_cube.scad>
-use <../Librairies/dotSCAD-3.2.2/src/rounded_cylinder.scad>
+use <../Librairies/dotSCAD/src/rounded_cube.scad>
+use <../Librairies/dotSCAD/src/rounded_cylinder.scad>
 $fn=120;
 
 cooking_knife();
 translate([0, 30, 0]) cooking_fork();
+translate([0, 60, 0]) ladle();
+translate([0, 90, 0]) spatula();
 
 module cooking_knife() {
   handle();
@@ -36,6 +38,11 @@ module cooking_fork() {
   translate([70, 6, 4.5]) {
     cube([45, 10, 2]);
   }
+  // reinforcement
+  translate([72, 11, 5.5])
+    rotate([0, 90, 0])
+      rounded_cylinder([3.5, 1.5], 25, 1);
+
   // teeth
   translate([110, 3, 4.5]) {
     minkowski() {
@@ -43,6 +50,49 @@ module cooking_fork() {
         cube([30, 16, 2]);
         translate([1, 1, -1]) cube([30+1, 14, 2+2]);
       }
+      cylinder(0.001, 2, 2);
+    }
+  }
+}
+
+module ladle() {
+  handle();
+
+  // body
+  translate([70, 6, 4.5]) {
+    cube([45, 10, 2]);
+  }
+  // reinforcement
+  translate([72, 11, 5.5])
+    rotate([0, 90, 0])
+      rounded_cylinder([3.5, 1.5], 25, 1);
+
+  // spoon part
+  translate([128.5, 11, 6.5]) {
+    difference() {
+      sphere(15);
+      sphere(13.5);
+      translate([-16, -16, 0]) cube([32, 32, 16]);
+    }
+  }
+}
+
+module spatula() {
+  handle();
+
+  // body
+  translate([70, 6, 4.5]) {
+    cube([45, 10, 2]);
+  }
+  // reinforcement
+  translate([72, 11, 5.5])
+    rotate([0, 90, 0])
+      rounded_cylinder([3.5, 1.5], 25, 1);
+
+  // 
+  translate([110, 3, 4.5]) {
+    minkowski() {
+      cube([30, 16, 2]);
       cylinder(0.001, 2, 2);
     }
   }
